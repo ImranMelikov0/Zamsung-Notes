@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center|top"
+    android:background="@color/white2"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:id="@+id/folder_background"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:backgroundTint="#FBFBFB"
+    android:background="@drawable/baseline_folder_24"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/folder_upColor"
+        android:layout_width="41dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="38dp"
+        android:background="@drawable/folder_upcolor"
+        android:layout_height="10dp">
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/folder_count"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-11dp"
+        android:textSize="15dp"
+        android:layout_marginLeft="17dp"
+        android:text="0"/>
+    <ImageView
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="-10dp"
+        android:id="@+id/folder_select_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:backgroundTint="@color/white2"
+        android:src="@drawable/baseline_radio_button_unchecked_24"
+        />
+    <TextView
+        android:id="@+id/folder_Name"
+        android:layout_width="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="Folder 4"
+        android:textStyle="bold"
+        android:layout_marginLeft="17dp"/>
+
+</LinearLayout>
+
+</LinearLayout>

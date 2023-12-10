@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.imranmelikov.zamsungnotes.ui.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/searchFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_nav_home_to_manageFoldersFragment"
+            app:destination="@id/manageFoldersFragment"
+            app:popUpTo="@id/manageFoldersFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_nav_home_to_passwordFragment"
+            app:destination="@id/passwordFragment"
+            app:popUpTo="@id/passwordFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_nav_home_self"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.imranmelikov.zamsungnotes.ui.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageFoldersFragment"
+        android:name="com.imranmelikov.zamsungnotes.ui.ManageFoldersFragment"
+        android:label="fragment_manage_folders"
+        tools:layout="@layout/fragment_manage_folders" >
+        <action
+            android:id="@+id/action_manageFoldersFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_bottom"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="com.imranmelikov.zamsungnotes.ui.PasswordFragment"
+        android:label="fragment_password"
+        tools:layout="@layout/fragment_password" >
+        <action
+            android:id="@+id/action_passwordFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_bottom" />
+    </fragment>
+</navigation>

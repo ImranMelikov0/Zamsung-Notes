@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/button_color"
+    tools:context=".UploadActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white2"
+        android:theme="@style/Theme.ZamsungNotes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white2"
+            android:backgroundTint="@color/white2"
+            app:popupTheme="@style/Theme.ZamsungNotes"
+            app:titleTextColor="@color/black">
+
+            <ImageView
+                android:id="@+id/upload_more"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="2dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/baseline_more_vert_24" />
+
+            <ImageView
+                android:id="@+id/upload_attach"
+                android:layout_width="30dp"
+                android:padding="2dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/baseline_attach_file_24" />
+
+            <ImageView
+                android:id="@+id/upload_book"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="2dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/baseline_menu_book_24" />
+
+            <ImageView
+                android:id="@+id/upload_back"
+                android:layout_width="40dp"
+                android:padding="2dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/baseline_arrow_back_ios_new_24" />
+
+            <EditText
+                android:id="@+id/title_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textSize="22dp"
+                android:inputType="text"
+                android:paddingTop="2dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="30dp"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:background="@color/white"
+                android:hint="Title"/>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/audio_relative"
+            android:layout_width="wrap_content"
+            android:layout_margin="12dp"
+            android:visibility="gone"
+            android:layout_gravity="center|right"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textViewFileInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="afdsajlsdlakjfdlkjslkf"
+                android:textSize="16sp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/textViewDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:12"
+                android:layout_below="@id/textViewFileInfo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"/>
+            <ImageView
+                android:id="@+id/play_button"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_play_arrow_24"
+                android:layout_below="@id/textViewDuration"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/voice_relative"
+            android:layout_width="wrap_content"
+            android:layout_margin="12dp"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_gravity="center|right"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/voice_play_button"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_play_arrow_24"
+                android:layout_below="@id/voice_textViewDuration"
+                android:layout_centerHorizontal="true"/>
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="30dp"
+                android:id="@+id/voice_record_button"
+                android:layout_marginTop="5dp"
+                android:layout_width="20dp"
+                android:backgroundTint="@color/red"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/voice_play_button"
+                android:layout_centerHorizontal="true"/>
+            <ImageView
+                app:cardCornerRadius="30dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/voice_record_stop_button"
+                android:layout_marginTop="5dp"
+                android:layout_width="20dp"
+                android:visibility="gone"
+                android:layout_height="20dp"
+                android:src="@drawable/baseline_stop_24"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/voice_textViewDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/upload_image"
+            android:layout_margin="15dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_launcher_background"/>
+        <ImageView
+            android:id="@+id/upload_image_big"
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:src="@drawable/ic_launcher_background"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
+            android:background="@color/white"
+            android:textCursorDrawable="@drawable/cursor_edittext"
+            >
+        </androidx.appcompat.widget.AppCompatEditText>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

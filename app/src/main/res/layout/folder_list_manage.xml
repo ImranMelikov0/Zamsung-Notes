@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="7dp"
+    android:background="#68FFFFFF"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="-2dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/select_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:padding="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="@color/white2"
+            android:src="@drawable/baseline_radio_button_unchecked_24"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/folder_image"
+            android:layout_width="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_folder_open_24" />
+
+        <TextView
+            android:id="@+id/folder_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Folders"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/item_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="42"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="15dp"
+            android:layout_marginRight="27dp"
+            android:textAlignment="textEnd"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,7 @@
+<!-- res/color/button_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Buton etkin olduğunda -->
+    <item android:state_enabled="true" android:color="@color/black" />
+    <!-- Buton etkin olmadığında -->
+    <item android:state_enabled="false" android:color="@color/gray" />
+</selector>

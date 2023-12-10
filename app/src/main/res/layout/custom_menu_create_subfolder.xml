@@ -1,0 +1,29 @@
+<!-- custom_menu_item.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="190dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="20dp"
+    android:padding="16dp">
+<LinearLayout
+    android:layout_width="190dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+    <TextView
+        android:paddingLeft="10dp"
+        android:id="@+id/menu_item_create_subfolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_margin="12dp"
+        android:text="Create subfolder"
+        android:textColor="#000000"
+        android:textSize="18sp"/>
+</LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

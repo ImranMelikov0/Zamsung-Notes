@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select destionation folder"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_margin="15dp"
+        android:textStyle="bold"
+        android:id="@+id/title_text_move"/>
+            <View
+                android:id="@+id/line"
+                android:layout_below="@id/title_text_move"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#ccc" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/move_nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/line"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/move_main_folder"
+                android:padding="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_opposite_rounded_menu_background"
+                >
+                <LinearLayout
+                    android:id="@+id/move_folder_image_linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/move_folder_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/baseline_keyboard_arrow_down_24" />
+
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:id="@+id/move_groupImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_folder_open_24" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_margin="5dp"
+                    android:id="@+id/move_groupTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Folders"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/move_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="27dp"
+                    android:text="42"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:textAlignment="textEnd"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+            <!--        <View-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="1dp"-->
+            <!--            android:background="#A5A5A5" />-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/move_main_folder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/move_rv_manage"/>
+            <LinearLayout
+                android:layout_below="@id/move_rv_manage"
+                android:id="@+id/move_manage_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:background="@drawable/white_rounded_menu_background"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/move_manage_add"
+                    android:layout_weight="5"
+                    android:layout_margin="5.5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_add2_24"/>
+                <TextView
+                    android:id="@+id/move_manage_create_text"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:text="Create folder"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

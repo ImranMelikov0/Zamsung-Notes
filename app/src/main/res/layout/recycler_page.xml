@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white2"
+    android:layout_marginBottom="20dp"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/white2"
+        android:layout_height="300dp">
+            <ImageView
+                android:layout_margin="15dp"
+                android:id="@+id/page_select_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:visibility="gone"
+                android:backgroundTint="@color/white2"
+                android:src="@drawable/baseline_radio_button_unchecked_24"
+                />
+
+        <TextView
+            android:id="@+id/page_main_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Title "
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:textAlignment="center"/>
+        <ImageView
+            android:id="@+id/page_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_lock_24"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_trash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="gone"
+            android:backgroundTint="#A7A8A8">
+            <TextView
+                android:id="@+id/delete_time"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="14dp"
+                android:visibility="gone"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="3dp"
+                android:textAlignment="center"
+                android:text="30 days"
+                android:textColor="@color/white2"/>
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/page_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:textSize="18dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Title"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/create_time"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:text="Oct 20"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/fav_star"
+            android:layout_weight="2"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:visibility="gone"
+            android:src="@drawable/baseline_star_24"/>
+
+</LinearLayout>

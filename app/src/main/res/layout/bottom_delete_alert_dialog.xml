@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="@drawable/white_left_right_top_bottom_radius"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/trash_empty_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="15dp"
+            android:text="5 items will be permanently deleted from the cloud and all your devices." />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:textSize="20dp"
+                android:layout_weight="1.4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:id="@+id/cancelButton" />
+
+            <Button
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Move to Trash"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/deleteButton" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

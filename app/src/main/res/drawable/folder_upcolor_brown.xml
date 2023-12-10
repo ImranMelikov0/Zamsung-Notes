@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#575146" /> <!-- Arka plan rengi (beyaz) -->
+    <corners android:topLeftRadius="16dp" android:topRightRadius="156dp"
+        android:bottomLeftRadius="156dp" android:bottomRightRadius="16dp" /> <!-- Sağ üst ve alt köşeleri yuvarlatmak için -->
+</shape>

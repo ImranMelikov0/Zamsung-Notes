@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        android:id="@+id/transition_Id"
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="10">
+       <KeyFrameSet>
+       </KeyFrameSet>
+        <OnSwipe />
+        <OnSwipe motion:touchAnchorId="@+id/scrollView" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/appBarLayout"
+            android:layout_marginTop="200dp" />
+        <Constraint
+            motion:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/title_text"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintBottom_toTopOf="@+id/appBarLayout"
+            motion:layout_editor_absoluteY="55dp" />
+        <Constraint
+            android:layout_height="371dp"
+            motion:layout_editor_absoluteX="1dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="409dp"
+            android:id="@+id/recyclerView2" />
+        <Constraint
+            android:layout_height="371dp"
+            motion:layout_editor_absoluteX="1dp"
+            android:layout_width="409dp"
+            motion:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:id="@+id/recyclerView" />
+        <Constraint
+            motion:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:id="@+id/nestedScrollView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            motion:layout_editor_absoluteX="-5dp"
+            android:layout_width="420dp"
+            motion:layout_editor_absoluteY="274dp"
+            android:layout_height="366dp" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="420dp"
+            android:layout_height="366dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/nestedScrollView"
+            android:layout_marginBottom="0dp"
+            motion:layout_editor_absoluteX="-5dp"
+            motion:layout_editor_absoluteY="274dp" />
+        <Constraint
+            android:id="@+id/subtitle_text"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@+id/appBarLayout"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="80dp" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/appBarLayout"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/fab"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="16dp" />
+        <Constraint
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            motion:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:id="@+id/recyclerView" />
+    </ConstraintSet>
+</MotionScene>
