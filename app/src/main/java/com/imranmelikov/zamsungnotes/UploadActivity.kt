@@ -36,13 +36,20 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.imranmelikov.zamsungnotes.databinding.ActivityUploadBinding
+import com.imranmelikov.zamsungnotes.model.Notes
+import com.imranmelikov.zamsungnotes.mvvm.HomeViewModel
 import com.imranmelikov.zamsungnotes.mvvm.UploadViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -73,7 +80,7 @@ class UploadActivity : AppCompatActivity() {
     private var checkFav=false
     private var checkBook=false
     private val REQUEST_IMAGE_CAPTURE = 1
-    private lateinit var imageUri: Uri
+    private var imageUri: Uri?=null
     private var checkCameraScan=false
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionlauncher: ActivityResultLauncher<String>
@@ -89,6 +96,12 @@ class UploadActivity : AppCompatActivity() {
     private var handler: Handler? = null
     private var elapsedTime = 0L
     private lateinit var viewModel: UploadViewModel
+    private lateinit var homeViewModel:HomeViewModel
+    private var imgUri=""
+    private var uri=""
+    private var audio=""
+    private var voice=""
+    private var titleText=""
 
     private var audiFile: File?=null
 
@@ -97,19 +110,119 @@ class UploadActivity : AppCompatActivity() {
         binding=ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel= ViewModelProvider(this@UploadActivity).get(UploadViewModel::class.java)
+        homeViewModel=ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        binding.uploadBack.setOnClickListener {
-            val intent= Intent(this,MainActivity::class.java)
-            startActivity(intent)
-            viewModel.playStop()
-            viewModel.stopRecord()
-            if (::mediaPlayer.isInitialized){
-                mediaPlayer.stop()
-                mediaPlayer.release()
+        val getIntent=intent
+        if (getIntent!=null&&getIntent.hasExtra("Note")){
+           val note= getIntent.getSerializableExtra("Note") as Notes
+            binding.editText.setText(note.text)
+            if (note.imgScan!=""){
+                binding.uploadImageBig.visibility=View.VISIBLE
+                Glide.with(this).load(note.imgScan).into(binding.uploadImageBig)
             }
-            finish()
-        }
+            if (note.imgUrl!=""){
+                binding.uploadImage.visibility=View.VISIBLE
+                Glide.with(this).load(note.imgUrl)
+                    .into(binding.uploadImage)
+                println(note.imgUrl)
+            }
+            if (note.voice!=""){
+                binding.voiceRelative.visibility=View.VISIBLE
+                val file= File(note.voice)
+                viewModel.playFile(file)
+            }
+            if (note.audio!=""){
+                binding.audioRelative.visibility=View.VISIBLE
+                val uri=Uri.parse(note.audio)
+                playSelectedFile1(uri)
+            }
+            checkFav=note.favStar
+            binding.titleEditText.setText(note.title)
+            binding.uploadBack.setOnClickListener {
+                if (selectedImage!=null){
+                    imgUri=selectedImage.toString()
+                }
+                if (selectedFileAudio!=null){
+                    audio=selectedFileAudio.toString()
+                }
+                if (audiFile!=null){
+                    voice=audiFile.toString()
+                }
+                if (imageUri!=null){
+                    uri=imageUri.toString()
+                }
 
+                if (binding.titleEditText.text.isEmpty()){
+                    titleText=note.title
+                }else{
+                    titleText=binding.titleEditText.text.toString()
+                }
+                val updateNote=Notes(titleText,binding.editText.text.toString(),note.lock,note.createDate,checkFav,imgUri,"",uri,audio,voice,note.parentId,note.trash,note.trashTime,note.trashStartTime,false)
+                updateNote.id=note.id
+                homeViewModel.updateNotes(updateNote)
+                val intent= Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                viewModel.playStop()
+                viewModel.stopRecord()
+                if (::mediaPlayer.isInitialized){
+                    mediaPlayer.stop()
+                    mediaPlayer.release()
+                }
+
+
+                finish()
+            }
+        }else if (getIntent!=null&&getIntent.hasExtra("folders")){
+            binding.uploadBack.setOnClickListener {
+                if (selectedImage!=null){
+                    imgUri=selectedImage.toString()
+                }
+                if (selectedFileAudio!=null){
+                    audio=selectedFileAudio.toString()
+                }
+                if (audiFile!=null){
+                    voice=audiFile.toString()
+                }
+                if (imageUri!=null){
+                    uri=imageUri.toString()
+                }
+                if (binding.titleEditText.text.isEmpty()){
+                    val currentDate= LocalDateTime.now()
+                    val formatter= DateTimeFormatter.ofPattern("dd/MM")
+                    val formatDate=currentDate.format(formatter)
+                    titleText="Text note ${formatDate}"
+                }else{
+                    titleText=binding.titleEditText.text.toString()
+                }
+                if (binding.editText.text.toString().isEmpty()){
+
+                }else{
+                    val currentDate= LocalDateTime.now()
+                    val formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd")
+                    val formatDate=currentDate.format(formatter)
+                   if (getIntent.getIntExtra("folders",-1)==-1){
+                       val insertNote=Notes(titleText,binding.editText.text.toString(),false,formatDate,checkFav,imgUri,"",uri,audio,voice,-1,false,"","",false)
+                       homeViewModel.insertNotes(insertNote)
+                   }else if (getIntent.getIntExtra("folders",-1)==-2){
+                       val insertNote=Notes(titleText,binding.editText.text.toString(),false,formatDate,checkFav,imgUri,"",uri,audio,voice,-1,false,"","",false)
+                       homeViewModel.insertNotes(insertNote)
+                   }else {
+                       val id=getIntent.getIntExtra("folders",-1)
+                       val insertNote=Notes(titleText,binding.editText.text.toString(),false,formatDate,checkFav,imgUri,"",uri,audio,voice,id,false,"","",false)
+                       homeViewModel.insertNotes(insertNote)
+                   }
+                }
+                val intent= Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                viewModel.playStop()
+                viewModel.stopRecord()
+                if (::mediaPlayer.isInitialized){
+                    mediaPlayer.stop()
+                    mediaPlayer.release()
+                }
+                finish()
+            }
+        }
         binding.editText.requestFocus()
         binding.editText.postDelayed({
             val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -373,11 +486,17 @@ class UploadActivity : AppCompatActivity() {
 //    }
 
     override fun onDestroy() {
-        if(this::mediaPlayer.isInitialized){
-            mediaPlayer.stop()
-            mediaPlayer.release()
-            viewModel.playStop()
-            viewModel.stopRecord()
+        try {
+            mediaPlayer?.let {
+                if (it.isPlaying) {
+                    it.stop()
+                }
+                it.reset()
+                it.release()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("MediaPlayer", "Error in onDestroy: ${e.message}")
         }
         super.onDestroy()
     }
@@ -400,6 +519,27 @@ class UploadActivity : AppCompatActivity() {
             if (!this::mediaPlayer.isInitialized) {
                 mediaPlayer = MediaPlayer()
                 mediaPlayer.setDataSource(this, selectedFileAudio!!)
+                mediaPlayer.prepare()
+            }
+
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.pause()
+                mediaPlayer.seekTo(0)
+                binding.playButton.setImageResource(R.drawable.baseline_play_arrow_24)
+            } else {
+                binding.playButton.setImageResource(R.drawable.baseline_stop_24)
+                mediaPlayer.start()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("MediaPlayer", "Error: ${e.message}")
+        }
+    }
+    private fun playSelectedFile1(uri: Uri) {
+        try {
+            if (!this::mediaPlayer.isInitialized) {
+                mediaPlayer = MediaPlayer()
+                mediaPlayer.setDataSource(this, uri)
                 mediaPlayer.prepare()
             }
 
@@ -689,6 +829,117 @@ class UploadActivity : AppCompatActivity() {
             if (::mediaPlayer.isInitialized){
                 mediaPlayer.stop()
                 mediaPlayer.release()
+            }
+            val getIntent=intent
+            if (getIntent!=null&&getIntent.hasExtra("Note")){
+                val note= getIntent.getSerializableExtra("Note") as Notes
+                binding.editText.setText(note.text)
+                if (note.imgScan!=""){
+                    binding.uploadImageBig.visibility=View.VISIBLE
+                    val uri=Uri.parse(note.imgScan)
+                    binding.uploadImageBig.setImageURI(uri)
+                }
+                if (note.imgUrl!=""){
+                    binding.uploadImage.visibility=View.VISIBLE
+                    val uri=Uri.parse(note.imgUrl)
+                    binding.uploadImage.setImageURI(uri)
+                }
+                if (note.voice!=""){
+                    binding.voiceRelative.visibility=View.VISIBLE
+                    val file= File(note.voice)
+                    viewModel.playFile(file)
+                }
+                if (note.audio!=""){
+                    binding.audioRelative.visibility=View.VISIBLE
+                    val uri=Uri.parse(note.audio)
+                    playSelectedFile1(uri)
+                }
+                checkFav=note.favStar
+                binding.titleEditText.setText(note.title)
+                binding.uploadBack.setOnClickListener {
+                    if (selectedImage!=null){
+                        imgUri=selectedImage.toString()
+                    }
+                    if (selectedFileAudio!=null){
+                        audio=selectedFileAudio.toString()
+                    }
+                    if (audiFile!=null){
+                        voice=audiFile.toString()
+                    }
+                    if (imageUri!=null){
+                        uri=imageUri.toString()
+                    }
+
+                    if (binding.titleEditText.text.isEmpty()){
+                        titleText=note.title
+                    }else{
+                        titleText=binding.titleEditText.text.toString()
+                    }
+                    val updateNote=Notes(titleText,binding.editText.text.toString(),note.lock,note.createDate,checkFav,imgUri,"",uri,audio,voice,note.parentId,note.trash,note.trashTime,note.trashStartTime,false)
+                    updateNote.id=note.id
+                    homeViewModel.updateNotes(updateNote)
+                    val intent= Intent(this,MainActivity::class.java)
+                    startActivity(intent)
+                    viewModel.playStop()
+                    viewModel.stopRecord()
+                    if (::mediaPlayer.isInitialized){
+                        mediaPlayer.stop()
+                        mediaPlayer.release()
+                    }
+
+
+                    finish()
+                }
+            }else if (getIntent!=null&&getIntent.hasExtra("folders")){
+                binding.uploadBack.setOnClickListener {
+                    if (selectedImage!=null){
+                        imgUri=selectedImage.toString()
+                    }
+                    if (selectedFileAudio!=null){
+                        audio=selectedFileAudio.toString()
+                    }
+                    if (audiFile!=null){
+                        voice=audiFile.toString()
+                    }
+                    if (imageUri!=null){
+                        uri=imageUri.toString()
+                    }
+                    if (binding.titleEditText.text.isEmpty()){
+                        val currentDate= LocalDateTime.now()
+                        val formatter= DateTimeFormatter.ofPattern("dd/MM")
+                        val formatDate=currentDate.format(formatter)
+                        titleText="Text note ${formatDate}"
+                    }else{
+                        titleText=binding.titleEditText.text.toString()
+                    }
+                    if (binding.editText.text.toString().isEmpty()){
+
+                    }else{
+                        val currentDate= LocalDateTime.now()
+                        val formatter= DateTimeFormatter.ofPattern("yyyy.MM.dd")
+                        val formatDate=currentDate.format(formatter)
+                        if (getIntent.getIntExtra("folders",-1)==-1){
+                            val insertNote=Notes(titleText,binding.editText.text.toString(),false,formatDate,checkFav,imgUri,"",uri,audio,voice,-1,false,"","",false)
+                            homeViewModel.insertNotes(insertNote)
+                        }else if (getIntent.getIntExtra("folders",-1)==-2){
+                            val insertNote=Notes(titleText,binding.editText.text.toString(),false,formatDate,checkFav,imgUri,"",uri,audio,voice,-1,false,"","",false)
+                            homeViewModel.insertNotes(insertNote)
+                        }else {
+                            val id=getIntent.getIntExtra("folders",-1)
+                            val insertNote=Notes(titleText,binding.editText.text.toString(),false,formatDate,checkFav,imgUri,"",uri,audio,voice,id,false,"","",false)
+                            homeViewModel.insertNotes(insertNote)
+                        }
+                    }
+                    val intent= Intent(this,MainActivity::class.java)
+                    startActivity(intent)
+                    viewModel.playStop()
+                    viewModel.stopRecord()
+                    if (::mediaPlayer.isInitialized){
+                        mediaPlayer.stop()
+                        mediaPlayer.release()
+                    }
+                    finish()
+                }
             }
             super.onBackPressed()
             finish()

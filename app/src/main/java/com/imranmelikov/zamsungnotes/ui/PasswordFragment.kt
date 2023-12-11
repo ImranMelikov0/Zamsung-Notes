@@ -1,60 +1,89 @@
 package com.imranmelikov.zamsungnotes.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.navigation.fragment.findNavController
+import com.imranmelikov.zamsungnotes.PasswordActivity
 import com.imranmelikov.zamsungnotes.R
+import com.imranmelikov.zamsungnotes.databinding.FragmentPasswordBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PasswordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class PasswordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding: FragmentPasswordBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_password, container, false)
-    }
+        binding = FragmentPasswordBinding.inflate(inflater, container, false)
+        val sharedPreferences = requireActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE)
+        binding.passwordButton.setOnClickListener {
+            val intent= Intent(requireActivity(), PasswordActivity::class.java)
+            intent.putExtra("passwordReset","reset")
+            startActivity(intent)
+        }
+        val password=sharedPreferences.getString("password","")
+        val editText = binding.passwordEdittext
+        editText.requestFocus()
+        editText.postDelayed({
+            val imm =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        }, 250)
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val searchText = editText.text.toString().trim()
+                if (searchText.isNotEmpty()) {
+                    if (searchText.length >= 4) {
+                        if (searchText==password){
+                            editText.clearFocus()
+                            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+                            findNavController().popBackStack()
+                        }else{
+                            binding.passwordText.text = "Incorrect password entered."
+                            editText.text.clear()
+                        }
+                    }
+                }
+                true
+            } else {
+                false
+            }
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PasswordFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PasswordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Before text changed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // On text changed
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // After text changed
+                val searchText = s.toString()
+                if (searchText.isNotEmpty()) {
+                    if (searchText.length >= 4) {
+                        binding.passwordText.text = "Enter your password."
+                    } else {
+                        binding.passwordText.text = "Enter a password with at least 4 characters in it."
+                    }
                 }
             }
+        })
+
+
+        return binding.root
     }
 }
