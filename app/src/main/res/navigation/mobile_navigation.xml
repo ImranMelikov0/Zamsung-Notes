@@ -70,5 +70,8 @@
             app:destination="@id/nav_home"
             app:enterAnim="@anim/slide_in_top"
             app:exitAnim="@anim/slide_out_bottom" />
+        <argument
+            android:name="Notes"
+            app:argType="com.imranmelikov.zamsungnotes.model.Notes" />
     </fragment>
 </navigation>

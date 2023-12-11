@@ -2,6 +2,7 @@ package com.imranmelikov.zamsungnotes.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,7 +113,9 @@ class HomeNotesAdapter(private val context: Context): RecyclerView.Adapter<HomeN
             // Block itemView to prevent unintended clicks during edit mode
             holder.itemView.setOnClickListener {
                 if (notesArrayList.lock){
-                    Navigation.findNavController(it).navigate(R.id.action_nav_home_to_passwordFragment)
+                    val bundle = Bundle()
+                    bundle.putSerializable("notes",notesArrayList)
+                    Navigation.findNavController(it).navigate(R.id.action_nav_home_to_passwordFragment,bundle)
                 }else{
                     val intent=Intent(context,UploadActivity::class.java)
                     intent.putExtra("Note",notesArrayList)

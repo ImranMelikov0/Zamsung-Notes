@@ -11,20 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.imranmelikov.zamsungnotes.PasswordActivity
 import com.imranmelikov.zamsungnotes.R
 import com.imranmelikov.zamsungnotes.databinding.FragmentPasswordBinding
+import com.imranmelikov.zamsungnotes.model.Notes
+import com.imranmelikov.zamsungnotes.mvvm.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PasswordFragment : Fragment() {
     private lateinit var binding: FragmentPasswordBinding
+    private lateinit var viewModel:HomeViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPasswordBinding.inflate(inflater, container, false)
+        viewModel=ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         val sharedPreferences = requireActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE)
         binding.passwordButton.setOnClickListener {
             val intent= Intent(requireActivity(), PasswordActivity::class.java)
@@ -45,6 +50,11 @@ class PasswordFragment : Fragment() {
                 if (searchText.isNotEmpty()) {
                     if (searchText.length >= 4) {
                         if (searchText==password){
+                            val receiveArgs = arguments
+                           var notes= receiveArgs?.getSerializable("notes") as Notes
+                            notes.lock=false
+                            notes.id=notes.id
+                            viewModel.updateNotes(notes)
                             editText.clearFocus()
                             val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                             imm.hideSoftInputFromWindow(editText.windowToken, 0)
